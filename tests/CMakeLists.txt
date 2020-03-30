@@ -5,6 +5,13 @@ if(NOT GTEST_FOUND)
   return()
 endif()
 
+
+### Build Test Util Library
+
+add_library(test_util STATIC test_utils.cc)
+target_link_libraries(test_util ${LIB_NAME})
+
+
 enable_testing()
 
 
@@ -14,7 +21,7 @@ function(AD_TEST NAME)
   message(STATUS "Test enabled:      ${NAME}")
 
 
-  target_link_libraries(${TEST_TARGET} PUBLIC ${LIB_NAME} GTest::GTest GTest::Main)
+  target_link_libraries(${TEST_TARGET} PUBLIC ${LIB_NAME} GTest::GTest GTest::Main test_util)
   target_link_libraries(${TEST_TARGET} PUBLIC ${ARGN})
 
   add_test(
@@ -32,3 +39,36 @@ AD_TEST(code_generator)
 AD_TEST(expression_graph)
 AD_TEST(expression_ref)
 AD_TEST(expression)
+
+
+macro (generate_test_functor FUNCTOR_NAME FUNCTOR_FILE)
+  ceres_generate_cost_function_implementation_for_functor(
+    NAME ${FUNCTOR_NAME}
+    INPUT_FILE ${FUNCTOR_FILE}
+    OUTPUT_DIRECTORY tests
+    NAMESPACE test
+    )
+endmacro()
+
+
+# Semantic tests should work on every platform
+include(CeresCodeGeneration)
+
+
+generate_test_functor(InputOutputAssignment autodiff_codegen_test.h)
+generate_test_functor(CompileTimeConstants autodiff_codegen_test.h)
+generate_test_functor(Assignments autodiff_codegen_test.h)
+generate_test_functor(BinaryArithmetic autodiff_codegen_test.h)
+generate_test_functor(UnaryArithmetic autodiff_codegen_test.h)
+generate_test_functor(BinaryComparison autodiff_codegen_test.h)
+generate_test_functor(LogicalOperators autodiff_codegen_test.h)
+generate_test_functor(ScalarFunctions autodiff_codegen_test.h)
+generate_test_functor(LogicalFunctions autodiff_codegen_test.h)
+generate_test_functor(Branches autodiff_codegen_test.h)
+
+AD_TEST(autodiff_codegen InputOutputAssignment CompileTimeConstants Assignments BinaryArithmetic
+  UnaryArithmetic BinaryComparison LogicalOperators ScalarFunctions
+  LogicalFunctions Branches)
+
+#target_link_libraries(autodiff_codegen_test PUBLIC
+#  )

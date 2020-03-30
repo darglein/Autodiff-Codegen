@@ -42,8 +42,8 @@
 //
 // Example - my_cost_functor.h
 // ========================================================
-//  #include "ceres/rotation.h"
-//  #include "ceres/autodiff_codegen_macros.h"
+//  #include "AutodiffCodegen/ceres/rotation.h"
+//  #include "AutodiffCodegen/ceres/autodiff_codegen_macros.h"
 //
 //  struct MyReprojectionError {
 //    MyReprojectionError(double observed_x, double observed_y)

@@ -32,7 +32,7 @@
 #define CERES_PUBLIC_CODEGEN_COST_FUNCTION_H_
 
 #include "AutodiffCodegen/macros.h"
-#include "ceres/sized_cost_function.h"
+#include "AutodiffCodegen/ceres/sized_cost_function.h"
 
 namespace ceres {
 

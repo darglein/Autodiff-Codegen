@@ -34,8 +34,8 @@
 #include "AutodiffCodegen/internal/code_generator.h"
 #include "AutodiffCodegen/internal/expression_graph.h"
 #include "AutodiffCodegen/internal/expression_ref.h"
-#include "ceres/internal/autodiff.h"
-#include "ceres/jet.h"
+#include "AutodiffCodegen/ceres/internal/autodiff.h"
+#include "AutodiffCodegen/ceres/jet.h"
 
 namespace ceres {
 
@@ -174,7 +174,7 @@ std::vector<std::string> GenerateCodeForFunctor(
   // EvaluateResidualAndJacobian. This combined function is compatible to
   // CostFunction::Evaluate. Therefore the generated code can be directly used
   // in SizedCostFunctions.
-  output.emplace_back("bool Evaluate(double const* const* parameters,");
+  output.emplace_back("EIGEN_DONT_INLINE bool Evaluate(double const* const* parameters,");
   output.emplace_back("              double* residuals,");
   output.emplace_back("              double** jacobians) const {");
 
