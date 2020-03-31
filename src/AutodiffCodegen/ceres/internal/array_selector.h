@@ -35,8 +35,8 @@
 #include <array>
 #include <vector>
 
-#include "AutodiffCodegen/ceres/internal/fixed_array.h"
 #include "AutodiffCodegen/ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -72,9 +72,9 @@ struct ArraySelector<T,
                      max_num_elements_on_stack,
                      true,
                      fits_on_stack>
-    : ceres::internal::FixedArray<T, max_num_elements_on_stack> {
+    :  std::vector<T>  {
   ArraySelector(int s)
-      : ceres::internal::FixedArray<T, max_num_elements_on_stack>(s) {}
+      : std::vector<T>(s) {}
 };
 
 template <typename T, int num_elements, int max_num_elements_on_stack>

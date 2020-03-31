@@ -146,7 +146,6 @@
 
 #include "AutodiffCodegen/ceres/internal/array_selector.h"
 #include "AutodiffCodegen/ceres/internal/eigen.h"
-#include "AutodiffCodegen/ceres/internal/fixed_array.h"
 #include "AutodiffCodegen/ceres/internal/parameter_dims.h"
 #include "AutodiffCodegen/ceres/internal/variadic_evaluate.h"
 #include "AutodiffCodegen/ceres/jet.h"
